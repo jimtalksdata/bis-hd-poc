@@ -4,6 +4,7 @@ from libs.rsa_py import rsa_functions
 from Crypto.PublicKey import RSA
 from Crypto.Protocol.KDF import PBKDF2
 import time
+import base64
 
 iterations = 4096
 length = 512
@@ -13,7 +14,7 @@ salt = "911043357914429888194562610468866919009913916826495585249693846506602119
 master_key = PBKDF2(seed.encode('utf-8'), salt.encode('utf-8'), dkLen=length, count=iterations)
 
 print("Master key (" + str(length) + "-byte, " + str(iterations) + " iterations): ")
-print(master_key)
+print(base64.b64encode(master_key))
 
 start = time.time()
 n = 4096
