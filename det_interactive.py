@@ -14,6 +14,8 @@ iterations = 4096
 length = 512
 n = 4096
 
+cointype = 209 # Provisionally, 209 (atomic weight of bismuth) (see https://github.com/satoshilabs/slips/blob/master/slip-0044.md )
+
 while(question != 3):
 
 	print("Test functions for deterministic Bismuth wallet:")
@@ -34,7 +36,7 @@ while(question != 3):
 		pwd_a = mnemo.generate(strength=256)   # for testing
 		
 		for i in range(0, addrs):
-			deriv_path = "m/44'/1'/" + str(aid) + "/0/" + str(i) #HD path
+			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "/0/" + str(i) #HD path
 
 			master_key = PBKDF2(pwd_a.encode('utf-8'), deriv_path.encode('utf-8'), dkLen=length, count=iterations)
 
@@ -65,7 +67,7 @@ while(question != 3):
 		print("Addreses:")
 		for i in range(0, addrs):
 			
-			deriv_path = "m/44'/1'/" + str(aid) + "/0/" + str(i)
+			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "/0/" + str(i)
 			print(deriv_path + ": " + addressList[i])
 		
 		
@@ -82,7 +84,7 @@ while(question != 3):
 		if(mnemo.check(pwd_a)):
 		
 			start = time.time()
-			deriv_path = "m/44'/1'/" + str(aid) + "/0/" + str(addrs) #HD path
+			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "/0/" + str(addrs) #HD path
 			
 			master_key = PBKDF2(pwd_a.encode('utf-8'), deriv_path.encode('utf-8'), dkLen=length, count=iterations)
 
