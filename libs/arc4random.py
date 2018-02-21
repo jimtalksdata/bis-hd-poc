@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#Code from https://github.com/rolandshoemaker/py-arc4random
 
 import random
 
