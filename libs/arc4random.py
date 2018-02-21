@@ -3,12 +3,9 @@
 
 import random
 
-keypool = []
-
 def rand(key=None):
 	if (key == None):
 		key=random.sample(range(256), 256)
-	keypool = key
 	seeds = _RC4PRGA(_RC4keySchedule(key))
 	return (seeds[0]<<24)|(seeds[1]<<16)|(seeds[2]<<8)|seeds[3]
 
@@ -39,8 +36,8 @@ def _RC4keySchedule(key):
 	sbox = list(range(256))
 	x = 0
 	keySize = len(key)
-	for i in sbox:
-		x = (x+i+key[i%keySize])%256
+	for i in range(256):
+		x = (x+sbox[i]+key[i%keySize])%256
 		_swap(sbox, i, x)
 	return sbox
 
@@ -49,11 +46,11 @@ def _RC4PRGA(state):
 	seeds = []
 	# Discard first 1536 bytes of the keystream according to RFC4345 as they may reveal information
 	# about key used (a set of these keys could reveal information about the source for our key)
-	for i in range((1536//4)+4):
+	for i in range(1536+4):
 		x = (x+1)%256
 		y = (y+state[x])%256
 		_swap(state, x, y)
-		if i >= (1536//4):
+		if i >= (1536):
 			seeds.append(state[(state[x]+state[y])%256])
 	return seeds
 
