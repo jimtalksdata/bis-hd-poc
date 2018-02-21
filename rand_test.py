@@ -54,7 +54,7 @@ def seedInt8 (x):
 	randPool[pptr] ^= x & 255
 	entropy += 1
 	pptr += 1
-	print("pptr: " + str(pptr))
+
 	if (pptr >= poolsize): 
 		pptr -= poolsize
 

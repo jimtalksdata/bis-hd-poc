@@ -1,12 +1,14 @@
 import base64, os, getpass, hashlib
+import time
+import random
 from Crypto import Random
 from simplecrypt import decrypt
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.PublicKey import RSA
+from pynput import mouse
 from libs.mnemonic import Mnemonic
 from libs.rsa_py import rsa_functions
-import time
-
+from libs import arc4random
 
 question = 0
 mnemo = Mnemonic('english')
@@ -16,6 +18,67 @@ n = 4096
 
 cointype = 209 # Provisionally, 209 (atomic weight of bismuth) (see https://github.com/satoshilabs/slips/blob/master/slip-0044.md )
 
+# rand parameters
+poolsize = 256
+randPool = random.sample(range(256), poolsize)	
+pptr = 0
+entropy = 0
+
+def on_move(x, y):
+    timeS = time.time() - int(time.time())
+    global entropy
+    global randPool
+	
+    seedInt16(x * y)
+    seedInt(int(timeS * 1000000000))
+	
+    os.system('cls') # on windows
+    print("Gathering entropy ... " + str(entropy) + " bytes gathered")
+    print(base64.b64encode(bytearray(randPool)))
+    if (entropy > 1024):
+        return False 
+
+def on_click(x, y, button, pressed):
+    return False
+
+def on_scroll(x, y, dx, dy):
+    print('Scrolled {0} at {1}'.format(
+        'down' if dy < 0 else 'up',
+        (x, y)))
+		
+def seedInt (x):
+	seedInt8(x)
+	seedInt8((x >> 8))
+	seedInt8((x >> 16))
+	seedInt8((x >> 24))
+
+def seedInt16 (x):
+	seedInt8(x)
+	seedInt8((x >> 8))
+
+def seedInt8 (x):
+	global poolsize
+	global randPool
+	global entropy
+	global pptr
+	randPool[pptr] ^= x & 255
+	entropy += 1
+	pptr += 1
+
+	if (pptr >= poolsize): 
+		pptr -= poolsize
+
+os.system('cls') # on windows
+print("Move the mouse to gather entropy...")
+		
+with mouse.Listener(
+	on_move=on_move,
+	on_click=on_click,
+	on_scroll=on_scroll) as listener:
+		listener.join()
+
+arc4random.rand(randPool)
+		
 while(question != 3):
 
 	print("Test functions for deterministic Bismuth wallet:")
@@ -33,7 +96,7 @@ while(question != 3):
 		addressList = []
 		
 		start = time.time()
-		pwd_a = mnemo.generate(strength=256)   # for testing
+		pwd_a = mnemo.to_mnemonic(arc4random.getrandbits(256))   # for testing
 		
 		for i in range(0, addrs):
 			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "/0/" + str(i) #HD path
