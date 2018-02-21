@@ -21,8 +21,10 @@ def on_move(x, y):
     seedInt(int(timeS * 1000000000))
 	
     os.system('cls') # on windows
+    print("XY: " + str(x*y))
+    print("Time: " + str(int(timeS * 1000000000)))
     print("Gathering entropy ... " + str(entropy) + " bytes gathered")
-    print(randPool)
+    print(base64.b64encode(bytearray(randPool)))
     if (entropy > 1024):
         return False 
 
@@ -66,4 +68,5 @@ with mouse.Listener(
 arc4random.rand(randPool)
 p = arc4random.getrandbits(512)
 
+print("")
 print(base64.b64encode(p))
