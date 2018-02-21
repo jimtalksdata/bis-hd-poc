@@ -37,14 +37,6 @@ def on_move(x, y):
     print(base64.b64encode(bytearray(randPool)))
     if (entropy > 1024):
         return False 
-
-def on_click(x, y, button, pressed):
-    return False
-
-def on_scroll(x, y, dx, dy):
-    print('Scrolled {0} at {1}'.format(
-        'down' if dy < 0 else 'up',
-        (x, y)))
 		
 def seedInt (x):
 	seedInt8(x)
@@ -72,9 +64,7 @@ os.system('cls') # on windows
 print("Move the mouse to gather entropy...")
 		
 with mouse.Listener(
-	on_move=on_move,
-	on_click=on_click,
-	on_scroll=on_scroll) as listener:
+	on_move=on_move) as listener:
 		listener.join()
 
 arc4random.rand(randPool)
