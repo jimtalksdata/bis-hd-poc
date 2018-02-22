@@ -28,15 +28,15 @@ key = bytearray.fromhex("0102030405060708090a0b0c0d0e0f10")
 print(bytes(key))
 state = rc4simple.seed(bytes(key))
 
-print(binascii.hexlify(rc4simple.getrandbits(64))) # b2 39 63 05  f0 3d c0 27
-print(binascii.hexlify(rc4simple.getrandbits(64))) # cc c3 52 4a  0a 11 18 a8
+print(binascii.hexlify(rc4simple.getrandbits(64))) # 9a c7 cc 9a  60 9d 1e f7 
+print(binascii.hexlify(rc4simple.getrandbits(64))) # b2 93 28 99  cd e4 1b 97
 
 key = bytearray.fromhex("1ada31d5cf688221c109163908ebe51debb46227c6cc8b37641910833222772a")
 print(bytes(key))
 state = rc4simple.seed(bytes(key))
 
-print(binascii.hexlify(rc4simple.getrandbits(64))) # b2 39 63 05  f0 3d c0 27
-print(binascii.hexlify(rc4simple.getrandbits(64))) # cc c3 52 4a  0a 11 18 a8
+print(binascii.hexlify(rc4simple.getrandbits(64))) # dd 5b cb 00  18 e9 22 d4
+print(binascii.hexlify(rc4simple.getrandbits(64))) # 94 75 9d 7c  39 5d 02 d3
 
 key = bytearray.fromhex("1ada31d5cf688221c109163908ebe51debb46227c6cc8b37641910833222772a")
 print(bytes(key))
