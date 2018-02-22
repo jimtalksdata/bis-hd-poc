@@ -11,8 +11,8 @@ from libs import arc4random
 
 question = 0
 mnemo = Mnemonic('english')
-iterations = 4096
-length = 512
+iterations = 2048
+length = 256
 n = 4096
 
 cointype = 209 # Provisionally, 209 (atomic weight of bismuth) (see https://github.com/satoshilabs/slips/blob/master/slip-0044.md )
@@ -31,6 +31,7 @@ while(question != 3):
 	
 		aid = int(input("Account ID: "))
 		addrs = int(input("Number of addresses to generate: "))
+		passphrase = input("Passphrase (hit return for empty): ")
 		addressList = []
 		
 		start = time.time()
@@ -40,12 +41,17 @@ while(question != 3):
 		# RSA key generation still uses Arcfour due to immurability criterion
 		pwd_a = mnemo.generate(strength=256)   # for testing
 		
+		passP = "mnemonic" + passphrase
+		master_key = PBKDF2(pwd_a.encode('utf-8'), passP.encode('utf-8'), dkLen=length, count=iterations)
+		print("Master key: " + str(base64.b64encode(master_key)))
+		
 		for i in range(0, addrs):
 			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "/0/" + str(i) #HD path
 
-			master_key = PBKDF2(pwd_a.encode('utf-8'), deriv_path.encode('utf-8'), dkLen=length, count=iterations)
-
-			rsa = rsa_functions.RSAPy(n,master_key)
+			account_key = PBKDF2(master_key, deriv_path.encode('utf-8'), dkLen=length, count=iterations)
+			print("Account key: " + str(base64.b64encode(account_key)))
+			
+			rsa = rsa_functions.RSAPy(n,account_key)
 			key = RSA.construct(rsa.keypair)
 
 			private_key_readable = key.exportKey().decode("utf-8")
@@ -84,16 +90,23 @@ while(question != 3):
 	
 		aid = int(input("Account ID: "))
 		addrs = int(input("Address Index ID (from 0): "))
+		passphrase = input("Passphrase (hit return for empty): ")
 		pwd_a = input("Mnemonic (BIP39 format): ")   # for testing
 		
 		if(mnemo.check(pwd_a)):
 		
 			start = time.time()
-			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "/0/" + str(addrs) #HD path
 			
-			master_key = PBKDF2(pwd_a.encode('utf-8'), deriv_path.encode('utf-8'), dkLen=length, count=iterations)
-
-			rsa = rsa_functions.RSAPy(n,master_key)
+			passP = "mnemonic" + passphrase
+			master_key = PBKDF2(pwd_a.encode('utf-8'), passP.encode('utf-8'), dkLen=length, count=iterations)
+			print("Master key: " + str(base64.b64encode(master_key)))
+			
+			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "/0/" + str(addrs) #HD path
+			account_key = PBKDF2(master_key, deriv_path.encode('utf-8'), dkLen=length, count=iterations)
+			
+			print("Account key: " + str(base64.b64encode(account_key)))
+			
+			rsa = rsa_functions.RSAPy(n,account_key)
 			key = RSA.construct(rsa.keypair)
 
 			private_key_readable = key.exportKey().decode("utf-8")
