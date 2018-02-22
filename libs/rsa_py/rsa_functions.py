@@ -107,6 +107,9 @@ class RSAPy(object):
     def key_generation(self, sd):
         '''Generate the public key pair (e, n) and the private key d'''
         rc4simple.seed(sd)
+        # Discard first 1536 bytes of the keystream according to RFC4345 as they may reveal information
+        # about key used (a set of these keys could reveal information about the source for our key)
+        rc4simple.getrandbits(1536*8)
         p = gen_prime(self.key_strength / 2)
         q = gen_prime(self.key_strength / 2)
         # Very unlikely, yet:
