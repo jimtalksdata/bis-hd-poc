@@ -104,7 +104,7 @@ Passphrase: "password123"
 
 PBKDF2 calculator: https://asecuritysite.com/encryption/PBKDF2z
 
-passP = "mnemonic"
+passP = "mnemonicpassword123"
 
 master_key = PBKDF2(pwd_a.encode('utf-8'), passP.encode('utf-8'), dkLen=256, count=2048)
 
