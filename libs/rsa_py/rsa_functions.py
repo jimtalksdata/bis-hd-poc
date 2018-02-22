@@ -8,6 +8,7 @@ import random
 import itertools
 import fractions
 import os
+from libs import rc4simple
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -31,7 +32,7 @@ def primality_test(n, k):
         d //= 2
         s += 1
     for i in range(k):
-        a = random.randrange(2, n - 2)
+        a = rc4simple.randrange(2, n - 2)
         x = pow(a, d, n)
         if not x == 1:  # No need to test further
             j = 0
@@ -69,7 +70,7 @@ def gen_prime(b):
     # Ensure leading and trailing bits are ones, making a number greater
     # than 2^(b-1)
     bits = int(b)
-    get_random_n = lambda: random.getrandbits(bits) | 1 << bits | 1
+    get_random_n = lambda: int.from_bytes(rc4simple.getrandbits(bits), byteorder='big') | 1 << bits | 1
     p = get_random_n()
     for i in itertools.count(1):  # Infinite loop until we find a prime
         if primality_test(p, 40):
@@ -88,7 +89,6 @@ class RSAPy(object):
     key = ''
     pubkey = []
 	
-	# TODO: Change to cryptographically strong PRNG
     def __init__(self, key_strength=1024, sd=os.urandom(512)):
         self.key_strength = key_strength
         keys = self.key_generation(sd)
@@ -106,7 +106,7 @@ class RSAPy(object):
 
     def key_generation(self, sd):
         '''Generate the public key pair (e, n) and the private key d'''
-        random.seed(sd)
+        rc4simple.seed(sd)
         p = gen_prime(self.key_strength / 2)
         q = gen_prime(self.key_strength / 2)
         # Very unlikely, yet:
@@ -115,7 +115,7 @@ class RSAPy(object):
         n = p * q
         x = (p - 1) * (q - 1)
         while True:
-            e = random.randint(3, x - 1)
+            e = rc4simple.randint(3, x - 1)
             if fractions.gcd(e, x) == 1:
                 break
         d = mod_multiplicative_inv(e, x)
