@@ -9,6 +9,7 @@ TECHNICAL SPECIFICATIONS
 ------------------------
 
 Input: 24-word mnemonic seed in BIP39 format (reference implementation here: https://bip32jp.github.io/english/)
+
 Output: Any number of RSA private/public key pairs
 
 Algorithm:
@@ -17,7 +18,7 @@ Algorithm:
 
 The master key is derived by 2048 rounds of PBKDF2(m,p) with dkLen of 256 bytes. All strings are utf-8 encoded.
 
-A hierarchial path is constructed according to BIP44 spec (hhttps://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki), briefly:
+A hierarchial path is constructed according to BIP44 spec (https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki), briefly:
 
 h = m/purpose'/coin_type'/account'/change/address_index
 
