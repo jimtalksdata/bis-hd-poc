@@ -1,4 +1,4 @@
------------------------------------------
+﻿-----------------------------------------
 -- Test vectors for det_interactive.py  -
 -----------------------------------------
 
@@ -190,10 +190,101 @@ b17549a4b8d85326892ffefaf7975205803e4bc20c7536838f789c32
 
 -------------------------------------------------------------------------------------------------------
 
-
 Mnemonic: abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon
 AccountID: 0
 Address: 1
 Passphrase: "password123"
 
 Output: Mnemonic invalid!!!
+
+
+-------------------------------------------------------------------------------------------------------
+
+Mnemonic: abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about
+AccountID: 0
+Address: 0
+Passphrase: "點" (unicode character)
+
+passP = "mnemonic點"
+
+master_key = PBKDF2(pwd_a.encode('utf-8'), passP.encode('utf-8'), dkLen=256, count=2048)
+
+Master key: b'AbmAvfyIMs/ZlsFJiao1c5OtewOj3yzMmsiduL8vnYv9jTq6BXBlJmubk7HDpCZa3XPxu8GeTv5m2mnohG5sibUUudybeh4F3xLrcEh0UcfZgk0KsHVFgJ06hZXNtuVixFMtUNUbgjc29RnqbqQM2Tyz61C60QoQwcic2ZXr3w8pAVRzVeSYqXBqRyReYl2ZHYvA5bKBN8mFZ/MHCa8g77Lu4I2geksfepAtNT1ktVrz3UhLajfpESuVitHgEquZuGJ9sTbFIW0EeXePOinmo86zmw19fw++207xjZtOZwbf3mjvCojWXiDWsmXtPTrRtxMhsnXckBMCak8nvJp5ww=='
+
+deriv_path = "m/44'/209'/0/0/0"
+
+account_key = PBKDF2(master_key, deriv_path.encode('utf-8'), dkLen=256, count=2048)
+
+Account key: b'GJmTTgvo/QOX2aeD+xaChbjO6WEb8qJH4WALn3xKW4ucuQ8svAjLqyC+OXLoalJY2BqphAfltLHSNlADQ6VtK5F1zDZ0fB0/Tlh02FJfxpWbXVKqyeamgkFCyGbyCbWEuk5VMT65AVUD4xI/Km6jImprFHdW0A+q2SoHR/0LsAMfmuzuAEGIkQU7jhMYMM50I1YUsshLafYHZD8aFljFHUWaJu6CfZmKGEuTdnth3XVz2rsIib5xju9jvufsq+0jZW6pxHPCCPMmVgBPZmEuub0/W/QhVLZLMWGILdqpstve11Abor5IsKkLJSgRkGVdjq0dsJR8Ca0EfJlacfJc/g=='
+
+Public key:
+-----BEGIN PUBLIC KEY-----
+MIICIzANBgkqhkiG9w0BAQEFAAOCAhAAMIICCwKCAgECGLHgAi2KKcG9qN9LaDln
+s6jcpPz8cfO+f8/CMprjiN8pIKj/t5j65zbPC0cGd1Ag2gWS21t0GleYQyrV/2jG
+ZMJB3Fuy/U5lIrM/DigIPSsicjXItY+ZYduGOmFL09nKCyQXjBxH1BZbG0K6Fteu
+UWiDt0xngSXoclqwzbIWzZm6kkdn3Rbn9rxhgGg2lM9ttozmAFirdSfdPzlDt6/z
+sf1zEdJ4onpKBZCE8hsMQ1UxifEKxrY5XzxIFiuruuvpUCLyQvlp/3HOBmqWmzo7
+3VR6LKep7c7ISe3tASA3v6UdUxzfSyKyiTW+0EqJHs2wk8b7Aw2vJc/blpqOmdsm
+a8TjWlrzLCxJWPpKb+FRLHjD3yBqm1ZEWv685Oz9kjhdcIk7SaP3oKGk3SkUvXn/
+KJxFRd4PXLGmKNaGLaT5pArLTaxJn9rXLZWdsz2AXKMGEK2eFAbfey5gFXP3x19t
+s5BK94B1gJP3o8uKTAYFuR/S3mwoF8yEKcNUdoCCWJ8zK9HOjCfdr4zEHy1xkZxp
+ltojqLvfHBF8/YgGYbh+KC0Uk1zImXeG2y2Ze4tZjRp6L67UjqENTd/0RwFTQ0QB
+Bd+dp+Rja4/EYIyuqQ876vDyw/FmpR+Vv3EwVg0NsGULM1uoMXC7BWVY0z8Hu69X
+2IX+ue2LAsCiINcYk43Zx3MCBAGnz2s=
+-----END PUBLIC KEY-----
+
+Private key:
+-----BEGIN RSA PRIVATE KEY-----
+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
+-----END RSA PRIVATE KEY-----
+
+Address:
+800478d422a8313152d235b64facdc808d261079f447fbbc8ac16a93
