@@ -12,8 +12,8 @@ Input: 24-word mnemonic seed in BIP39 format (reference implementation here: htt
 Output: Any number of RSA private/public key pairs
 
 Algorithm:
-m = Mnemonic seed of choice; optionally generate using /dev/urandom
-p = User defined passphrase, prefixed by the string "mnemonic"
+* m = Mnemonic seed of choice; optionally generate using /dev/urandom
+* p = User defined passphrase, prefixed by the string "mnemonic"
 
 The master key is derived by 2048 rounds of PBKDF2(m,p) with dkLen of 256 bytes. All strings are utf-8 encoded.
 
@@ -21,11 +21,11 @@ A hierarchial path is constructed according to BIP44 spec (hhttps://github.com/b
 
 h = m/purpose'/coin_type'/account'/change/address_index
 
-  purpose = 44
-  coin_type = 209 (provisionally, for Bismuth)
-  account = user-defined non-negative integer
-  change = 0 or 1
-  address_index = user-defined non-negative integer
+ * purpose = 44
+ * coin_type = 209 (provisionally, for Bismuth)
+ * account = user-defined non-negative integer
+ * change = 0 or 1
+ * address_index = user-defined non-negative integer
 
 The account key is derived by 2048 rounds of PBKDF2(master_key,h) with dkLen of 256 bytes. All strings are utf-8 encoded.
 
