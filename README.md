@@ -23,7 +23,7 @@ A hierarchial path is constructed according to BIP44 spec (https://github.com/bi
 h = m/purpose'/coin_type'/account'/change/address_index
 
  * purpose = 44
- * coin_type = 209 (provisionally, for Bismuth)
+ * coin_type = 209 (officially Bismuth per BIP44)
  * account = user-defined non-negative integer
  * change = 0 or 1
  * address_index = user-defined non-negative integer
