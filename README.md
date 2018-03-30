@@ -1,7 +1,7 @@
 # bis-hd-poc
 Proof of concept deterministic RSA address generation for Bismuth (https://github.com/hclivess/Bismuth)
 
-INCOMPLETE. KEY DERIVATION WILL CHANGE IN FUTURE. DO NOT USE AS ACTUAL WALLET for now.
+Please test. Outputs working keys but should still be considered as proof-of-concept (PoC).
 
 Outputs privkey, pubkey, and address to stdout.
 
