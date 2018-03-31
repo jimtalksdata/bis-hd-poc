@@ -26,7 +26,7 @@ The master key is derived by 2048 rounds of PBKDF2(m,p) with dkLen of 256 bytes.
 
 A hierarchial path is constructed according to BIP44 spec (https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki), briefly:
 
-h = m/purpose'/coin_type'/account'/change/address_index
+h = m/purpose'/coin_type'/account/change/address_index
 
  * purpose = 44
  * coin_type = 209 (officially Bismuth per BIP44)
