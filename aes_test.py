@@ -2,7 +2,6 @@
 
 from libs import aessimple
 import binascii
-from pyentrp import entropy as ent
 import numpy as np
 import struct
 import time

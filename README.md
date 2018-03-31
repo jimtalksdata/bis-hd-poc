@@ -5,6 +5,11 @@ Please test. Outputs working keys but should still be considered as proof-of-con
 
 Outputs privkey, pubkey, and address to stdout.
 
+Requirements:
+- pycryptodome (DO NOT INSTALL pycrypto)
+- numpy==1.11.3+mkl
+- pynput==1.3.10
+
 TECHNICAL SPECIFICATIONS
 ------------------------
 
