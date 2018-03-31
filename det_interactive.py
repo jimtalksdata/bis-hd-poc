@@ -10,7 +10,7 @@ from libs.rsa_py import rsa_functions
 question = 0
 mnemo = Mnemonic('english')
 iterations = 20000
-length = 32
+length = 48
 n = 4096
 
 cointype = 209 # Provisionally, 209 (atomic weight of bismuth) (see https://github.com/satoshilabs/slips/blob/master/slip-0044.md )
@@ -100,6 +100,7 @@ while(question != 3):
 			print("Master key: " + str(base64.b64encode(master_key)))
 			
 			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "'/0/" + str(addrs) #HD path
+			print("Deriv path: " + deriv_path)
 			account_key = PBKDF2(master_key, deriv_path.encode('utf-8'), dkLen=length, count=1)
 			
 			print("Account key: " + str(base64.b64encode(account_key)))
