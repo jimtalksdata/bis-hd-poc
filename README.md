@@ -21,7 +21,7 @@ Algorithm:
 * m = Mnemonic seed of choice; optionally generate using /dev/urandom
 * p = User defined passphrase, prefixed by the string "mnemonic"
 
-The master key is derived by 20000 rounds of PBKDF2(m,p) with dkLen of 32 bytes. All strings are utf-8 encoded.
+The master key is derived by 20000 rounds of PBKDF2(m,p) with dkLen of 48 bytes. All strings are utf-8 encoded.
 
 A hierarchial path is constructed according to BIP44 spec (https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki), briefly:
 
@@ -33,6 +33,6 @@ h = m/purpose'/coin_type'/account'/change/address_index
  * change = 0 or 1
  * address_index = user-defined non-negative integer
 
-The account key is derived by 1 round of PBKDF2(master_key,h) with dkLen of 32 bytes. All strings are utf-8 encoded.
+The account key is derived by 1 round of PBKDF2(master_key,h) with dkLen of 48 bytes. All strings are utf-8 encoded.
 
-The account key is used in full to seed 32 bytes (first 16 bytes of key, last 16 bytes of IV) of a standard AES-128 (CTR mode) CSPRNG implementation. The CSPRNG remainder is used to implement a Rabin-Miller primality search with 1000 pre-computed smallest primes. The output tuple is sent to RSA.Construct in the pycryptodome library to create the RSA private and pubkey keypair. The privkey, pubkey, and address along with intermediate master and account keys are output to stdout.
+The account key is used in full to seed 48 bytes (first 32 bytes of key, last 16 bytes of IV) of a standard AES-256 (CTR mode) CSPRNG implementation. The CSPRNG remainder is used to implement a Rabin-Miller primality search with 1000 pre-computed smallest primes. The output tuple is sent to RSA.Construct in the pycryptodome library to create the RSA private and pubkey keypair. The privkey, pubkey, and address along with intermediate master and account keys are output to stdout.
