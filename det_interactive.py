@@ -9,8 +9,8 @@ from libs.rsa_py import rsa_functions
 
 question = 0
 mnemo = Mnemonic('english')
-iterations = 2048
-length = 256
+iterations = 20000
+length = 32
 n = 4096
 
 cointype = 209 # Provisionally, 209 (atomic weight of bismuth) (see https://github.com/satoshilabs/slips/blob/master/slip-0044.md )
@@ -44,9 +44,9 @@ while(question != 3):
 		print("Master key: " + str(base64.b64encode(master_key)))
 		
 		for i in range(0, addrs):
-			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "/0/" + str(i) #HD path
+			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "'/0/" + str(i) #HD path
 
-			account_key = PBKDF2(master_key, deriv_path.encode('utf-8'), dkLen=length, count=iterations)
+			account_key = PBKDF2(master_key, deriv_path.encode('utf-8'), dkLen=length, count=1)
 			print("Account key: " + str(base64.b64encode(account_key)))
 			
 			rsa = rsa_functions.RSAPy(n,account_key)
@@ -76,7 +76,7 @@ while(question != 3):
 		print("Addreses:")
 		for i in range(0, addrs):
 			
-			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "/0/" + str(i)
+			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "'/0/" + str(i)
 			print(deriv_path + ": " + addressList[i])
 		
 		
@@ -99,8 +99,8 @@ while(question != 3):
 			master_key = PBKDF2(pwd_a.encode('utf-8'), passP.encode('utf-8'), dkLen=length, count=iterations)
 			print("Master key: " + str(base64.b64encode(master_key)))
 			
-			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "/0/" + str(addrs) #HD path
-			account_key = PBKDF2(master_key, deriv_path.encode('utf-8'), dkLen=length, count=iterations)
+			deriv_path = "m/44'/"+ str(cointype) +"'/" + str(aid) + "'/0/" + str(addrs) #HD path
+			account_key = PBKDF2(master_key, deriv_path.encode('utf-8'), dkLen=length, count=1)
 			
 			print("Account key: " + str(base64.b64encode(account_key)))
 			
