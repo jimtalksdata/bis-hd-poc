@@ -2,12 +2,10 @@ import base64, os, getpass, hashlib
 import time
 import random
 from Crypto import Random
-from simplecrypt import decrypt
 from Crypto.Protocol.KDF import PBKDF2
 from Crypto.PublicKey import RSA
 from libs.mnemonic import Mnemonic
 from libs.rsa_py import rsa_functions
-from libs import arc4random
 
 question = 0
 mnemo = Mnemonic('english')
