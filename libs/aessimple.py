@@ -5,8 +5,11 @@ from Crypto.Cipher import AES
 from Crypto.Util import Counter
 import random
 
+request_count = 0
+
 BPF = 53        # Number of bits in a float
 RECIP_BPF = 2**-BPF
+_RESEED_INTERVAL = 1 << 48
 
 global AESCipher
 
@@ -29,6 +32,7 @@ def seed(keybytes, counter_wraparound=False):
 	ctr = Counter.new(128, initial_value=int.from_bytes(iv, byteorder='big'),
                                allow_wraparound=counter_wraparound)
 	AESCipher = AES.new(key, AES.MODE_CTR, counter=ctr)
+	request_count = 0
 	
 def random():
 	return (int.from_bytes(getrandbits(7 * 8),byteorder='big') >> 3) * RECIP_BPF
@@ -37,15 +41,18 @@ def rand():
 	return int.from_bytes(getrandbits(32),byteorder='big')
 	
 def getrandbits(k):
-	"""Yield a pseudo-random stream of bits based on 256-byte array `k`."""
-	global AESCipher
+	"""Yield a pseudo-random stream of bits."""
+	global AESCipher, request_count, _RESEED_INTERVAL
 	if k <= 0:
 		raise ValueError('number of bits must be greater than zero')
 	if k != int(k):
 		raise TypeError('number of bits should be an integer')
 	if (k % 8) != 0:
-		raise TypeError('number of bits should be multiple of 8')
+		raise ValueError('number of bits should be multiple of 8')
 	numbytes = (k + 7) // 8
+	request_count += numbytes
+	if (request_count > _RESEED_INTERVAL):
+		raise ValueError('output exceeds safe deterministic reseed interval; please reseed generator by calling seed()')
 	return(AESCipher.encrypt(bytes(numbytes)))
 	
 def randint(x, y=None):
