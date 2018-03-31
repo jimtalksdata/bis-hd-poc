@@ -6,6 +6,7 @@ import numpy as np
 import struct
 import time
 import math
+import os
 
 # Reference: https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38a.pdf
 
@@ -109,30 +110,30 @@ for i in range(iters):
 pi = 4.0 * count / iters
 print("pi = " + str(pi))
 
-# Generate 20MB of random data and time
+# Generate 1MB of random data and time
 
 start = time.time()
 start = time.time()
 file_object  = open("testrand", "wb")
-key = bytearray.fromhex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4" + "f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff")
+key = os.urandom(48)
 print(bytes(key))
 state = aessimple.seed(bytes(key))
-bytes = aessimple.getrandbits(1000000*8*20)
-file_object.write(struct.pack('20000000B', *bytes))
+bytes = aessimple.getrandbits(1048576*8)
+file_object.write(struct.pack('1048576B', *bytes))
 end = time.time()
 print("20MB generated in: " + str(end - start))
 
 print("All tests passed")
 '''
-Entropy = 7.999992 bits per byte.
+Entropy = 7.999820 bits per byte.
 
 Optimum compression would reduce the size
-of this 20000000 byte file by 0 percent.
+of this 1048576 byte file by 0 percent.
 
-Chi square distribution for 20000000 samples is 215.33, and randomly
-would exceed this value 96.62 percent of the times.
+Chi square distribution for 1048576 samples is 261.63, and randomly
+would exceed this value 37.43 percent of the times.
 
-Arithmetic mean value of data bytes is 127.5217 (127.5 = random).
-Monte Carlo value for Pi is 3.140664314 (error 0.03 percent).
-Serial correlation coefficient is -0.000027 (totally uncorrelated = 0.0).
+Arithmetic mean value of data bytes is 127.5868 (127.5 = random).
+Monte Carlo value for Pi is 3.144276216 (error 0.09 percent).
+Serial correlation coefficient is 0.001992 (totally uncorrelated = 0.0).
 '''
