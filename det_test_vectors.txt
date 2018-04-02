@@ -110,7 +110,7 @@ eff6a6c8768a2d37b722c062febce61d4ff7285a4c71227b188f3105
 -
 - The output for this test should match Maccaspacca's Paper wallet generation as of 2018-04-01
 - https://github.com/maccaspacca/Bismuth-Paper-Wallet
-- TBD
+- Commit SHA-1: ad3ba855c4f3e9420558bc5b8b21b4f10ac2c0cf
 - 
 
 
