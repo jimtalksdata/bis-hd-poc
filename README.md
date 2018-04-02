@@ -1,14 +1,15 @@
 # bis-hd-poc
-Proof of concept deterministic RSA address generation for Bismuth (https://github.com/hclivess/Bismuth)
+Proof of concept deterministic RSA address generation for Bismuth (https://github.com/hclivess/Bismuth). This is meant to be a reference implementation and is not intended to be an end-user product.
 
-Please test. Outputs working keys but should still be considered as proof-of-concept (PoC).
+Known wallets using this implementation:
+- Maccaspacca's paper wallet generator: https://github.com/maccaspacca/Bismuth-Paper-Wallet
 
 Outputs privkey, pubkey, and address to stdout.
 
 Requirements:
-- pycryptodome (DO NOT INSTALL pycrypto)
-- numpy==1.11.3+mkl
-- pynput==1.3.10
+- pycryptodome
+- numpy
+- pynput
 
 TECHNICAL SPECIFICATIONS
 ------------------------
