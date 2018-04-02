@@ -32,6 +32,9 @@ h = m/purpose'/coin_type'/account'/change/address_index
  * account = user-defined non-negative integer
  * change = 0 or 1
  * address_index = user-defined non-negative integer
+ 
+(NB1: single quotes are suffixed to the purpose, coin_type, and account fields, and not the change or address_index fields, per official BIP44 standard. The BIP44 path does not contain spaces, tabs, or other whitespace.)
+(NB2: single Bismuth, like Ethereum, has no concept of change addresses, the change field is typically hardcoded to 0 in most implementations, including the reference.)
 
 The account key is derived by 1 round of PBKDF2(master_key,h) with dkLen of 48 bytes. All strings are utf-8 encoded.
 
